@@ -12,21 +12,24 @@
 class Animal:
     name: str
     age: int
-    type_animal: str
-    sound_animal: str
+    type: str
+    sound: str
 
-    def play_sound_animal(self, sound_animal: str) -> None:
 
-        print(f"Животное издает звук {sound_animal}")
+    def __init__(self, name: str, age: int, type: str, sound: str):
+        self.name = name
+        self.age = age
+        self.type = type
+        self.sound = sound
+
+
+    def bark(self) -> str:
+
+        return f"Животное издает звук {self.sound}"
 
 
     def __str__(self):
-
-        print(f"Имя животного: {self.name}")
-        print(f"Возраст животного: {self.age}")
-        print(f"Тип животного {self.type_animal}")
-        print(f"Звук животного {self.sound_animal}")
-
+        return f"Имя животного: {self.name} \nВозраст животного: {self.age} \nТип животного {self.type} \nЗвук животного {self.sound}"
 
 
 
@@ -46,22 +49,24 @@ class Book:
     author: str
     count_page: int
 
+    def __init__(self, tittle: str, author: str, count_page: int):
+        self.tittle = tittle
+        self.author = author
+        self.count_page = count_page
 
 
     def __str__(self):
-        print(f"Наименование книги: {self.tittle}")
-        print(f"Автор книги: {self.author}")
-        print(f"Количество страниц: {self.count_page}")
+        return f"Наименование книги: {self.tittle} \nАвтор книги: {self.author} \nКоличество страниц: {self.count_page}"
+
 
 
     def open_page(self, number_page: int) -> str | None:
-        if number_page <= self.count_page and number_page > 0:
+        if number_page > self.count_page or number_page < 0:
+            raise ValueError()
 
-            return f"Страница {number_page} открыта"
+        return f"Страница {number_page} открыта"
 
-        else:
 
-            return f"Страницы {number_page} не существует"
 
 
 
@@ -81,45 +86,52 @@ class Book:
 
 
 class PassengerPlane:
-    manufactured_plane: str
-    model_plane: str
+    manufactured: str
+    model: str
     passenger_capacity: int
     current_height: float
     current_speed: float
+    max_height: float
+    min_height: float
+    max_speed: float
+
+
+    def __init__(self, manufactured: str, model: str, passenger_capacity: int, current_height: float, current_speed: float, max_height: float, min_height: float, max_speed: float):
+        self.manufactured = manufactured
+        self.model = model
+        self.passenger_capacity = passenger_capacity
+        self.current_height = current_height
+        self.current_speed = current_speed
+        self.max_height = max_height
+        self.min_height = min_height
+        self.max_speed = max_speed
 
 
 
     def __str__(self):
-        print(f"Производитель самолёта: {self.manufactured_plane}")
-        print(f"Модель самолёта: {self.model_plane}")
-        print(f"Вместимость пассажиров: {self.passenger_capacity}")
-        print(f"Текущая высота: {self.current_height}")
-        print(f"Текущая скорость: {self.current_speed}")
+        return f"Производитель самолёта: {self.manufactured} \nМодель самолёта: {self.model} \nВместимость пассажиров: {self.passenger_capacity} \nТекущая высота: {self.current_height} \nТекущая скорость: {self.current_speed}"
 
 
-    def take_off(self, current_height: float, current_speed: float) -> str:
-
+    def take_off(self) -> str:
         return "Самолёт взлетел!"
 
 
-    def landing(self, current_height: float, current_speed: float) -> str:
-
+    def landing(self) -> str:
         return "Самолёт приземлился!"
 
 
-    def height_change(self, new_height: float) -> str:
+    def set_height(self, new_height: float) -> None:
 
-        self.current_height = new_height
+        if new_height > self.min_height and new_height < self.max_height:
+            self.current_height = new_height
 
-        return "Высота изменена!"
 
 
-    def speed_change(self, new_speed: float) -> str:
 
-        self.current_speed = new_speed
+    def set_speed(self, new_speed: float) -> None:
 
-        return "Скорость изменена!"
-
+        if new_speed < self.max_speed:
+            self.current_speed = new_speed
 
 
 
@@ -136,48 +148,34 @@ class PassengerPlane:
 
 class MusicAlbum:
     singer: str
-    name_album: str
+    name: str
     genre: str
     tracks: list[str]
 
 
     def __str__(self):
-        print(f"Исполнитель: {self.singer}")
-        print(f"Наименование альбома: {self.name_album}")
-        print(f"Жанр: {self.genre}")
-        print(f"Список треков: {self.tracks}")
+        return f"Исполнитель: {self.singer} \nНаименование альбома: {self.name} \nЖанр: {self.genre} \nСписок треков: {self.tracks}"
 
 
     def add_track(self, track: str) -> None:
         self.tracks += track
 
 
-    def delete_track(self, track: str) -> str:
-        is_availability = False
+    def delete_track(self, track: str) -> None:
 
         for i in range(len(self.tracks)):
 
             if self.tracks[i] == track:
                 self.tracks.pop(i)
-                is_availability = True
 
-        if is_availability:
-            return f"Трек {track} удалён с альбома!"
-
-        return f"Трек {track} не найден"
 
 
     def play_track(self, track: str) -> str:
-        is_availability = False
 
         for i in range(len(self.tracks)):
 
             if self.tracks[i] == track:
-                is_availability = True
-
-
-        if is_availability:
-            return f"Воспроизводится {track}"
+                return f"Воспроизводится {track}"
 
         return f"Трек {track} не найден"
 
