@@ -4,114 +4,141 @@ class Smartphone:
     brand: str
     model: str
     operating_system: str
-    storage: int
-    free_storage: float
+    memory: int
+    hard_memory: float
     ram: int
-    charge: int
+    battery_level: int
     is_work: bool
 
 
-    def __init__(self, brand: str, model: str, operating_system: str, storage: int, ram: int, charge: int, is_work: bool, free_storage: float):
+    def __init__(self, brand: str, model: str, operating_system: str, memory: int, ram: int, battery_level: int, is_work: bool, hard_memory: float):
 
-        self.brand = brand
-        self.model = model
-        self.operating_system = operating_system
-        self.storage = storage
-        self.free_storage = free_storage
-        self.ram = ram
-        self.charge = charge
-        self.is_work = is_work
+        self.__brand = brand
+        self.__model = model
+        self.__operating_system = operating_system
+        self.__memory = memory
+        self.__hard_memory = hard_memory
+        self.__ram = ram
+        self.__battery_level = battery_level
+        self.__is_work = is_work
 
 
     def __str__(self):
-        return (f"Марка {self.brand} "
-                f"\nМодель: {self.model}"
-                f"\nОперационная система: {self.operating_system}"
-                f"\nВстроенная память: {self.storage}"
-                f"\nСвободная память: {self.free_storage}"
-                f"\nОперативная память: {self.ram}"
-                f"\nТекущий заряд: {self.charge}"
-                f"\nСостояние работы: {self.is_work}")
+        return (f"Марка {self.__brand} "
+                f"\nМодель: {self.__model}"
+                f"\nОперационная система: {self.__operating_system}"
+                f"\nВстроенная память: {self.__memory}"
+                f"\nСвободная память: {self.__hard_memory}"
+                f"\nОперативная память: {self.__ram}"
+                f"\nТекущий заряд: {self.__battery_level}"
+                f"\nСостояние работы: {self.__is_work}")
 
+
+    def try_turn_on(self) -> bool:
+        if self.__battery_level > 0:
+            return True
+
+        return False
 
     def turn_on(self) -> None:
-        is_work = True
+        if self.try_turn_on():
+            self.__is_work = True
+
+        return None
 
     def turn_off(self) -> None:
-        is_work = False
+        self.is_work = False
 
-    def replace_operating_system(self, new_operating_system: str) -> None:
-        self.operating_system = new_operating_system
+    def system_deployment(self, new_operating_system: str) -> None:
+        self.__operating_system = new_operating_system
 
-    def installation_app(self, required_storage) -> None | str:
+    def try_installation_app(self, required_storage: float) -> bool:
         if required_storage < 0:
             raise ValueError
 
-        if self.free_storage < required_storage:
-            return "Очистите память"
+        if self.__hard_memory < required_storage:
+            return False
 
-        self.free_storage -= required_storage
-        return None
+        self.__hard_memory -= required_storage
+        return True
 
     def delete_app(self, required_storage) -> None:
-        if required_storage < 0 or required_storage > self.storage:
+        if required_storage < 0 or required_storage > self.__memory:
             raise ValueError
 
-        self.free_storage += required_storage
+        self.__hard_memory += required_storage
         return None
 
     def charging(self, growth_charge) -> None:
-        if growth_charge > 100 or (growth_charge + self.charge) > 100 or growth_charge < 0:
+        if growth_charge > 100 or (growth_charge + self.__battery_level) > 100 or growth_charge < 0:
             raise ValueError
 
-        self.charge += growth_charge
+        self.__battery_level += growth_charge
 
     def discharge(self, decrease_charge) -> None:
-        if decrease_charge > 100 or decrease_charge < 0 or (self.charge - decrease_charge) < 0:
+        if decrease_charge > 100 or decrease_charge < 0 or (self.__battery_level - decrease_charge) < 0:
             raise ValueError
 
-        self.charge -= decrease_charge
+        self.__battery_level -= decrease_charge
 
 
     def get_is_work(self) -> bool:
-        return self.is_work
+        return self.__is_work
 
     def get_charge(self) -> int:
-        return self.charge
+        return self.__battery_level
 
     def get_ram(self) -> int:
-        return self.ram
+        return self.__ram
 
     def get_free_storage(self) -> float:
-        return self.free_storage
+        return self.__hard_memory
 
     def get_storage(self) -> int:
-        return self.storage
+        return self.__memory
 
     def get_operating_system(self) -> str:
-        return self.operating_system
+        return self.__operating_system
 
     def get_model(self) -> str:
-        return self.model
+        return self.__model
 
     def get_brand(self) -> str:
-        return self.brand
+        return self.__brand
 
+
+    def set_brand(self, new_brand: str) -> None:
+        self.__brand = new_brand
+
+    def set_model(self, new_model: str) -> None:
+        self.__model = new_model
 
     def set_operating_system(self, new_system: str) -> None:
-        self.operating_system = new_system
+        self.__perating_system = new_system
 
-    def set_storage(self, new_storage: int) -> None:
-        self.storage = new_storage
+    def set_storage(self, new_memory: int) -> None:
+        self.__memory = new_memory
 
     def set_ram(self, new_ram: int) -> None:
-        self.ram = new_ram
+        self.__ram = new_ram
 
-    def set_charge(self, new_charge: int) -> None:
-        self.charge = new_charge
+    def set_charge(self, new_battery_level: int) -> None:
+        self.__battery_level = new_battery_level
 
     def set_is_work(self, new_is_work: bool) -> None:
-        self.is_work = new_is_work
+        self.__is_work = new_is_work
+
+
+iphone = Smartphone("apple", "13", "IOS", 128, 16, 90, False, 30)
+
+iphone.turn_on()
+iphone.system_deployment("Android")
+iphone.try_installation_app(4)
+iphone.delete_app(4)
+iphone.charging(6)
+iphone.discharge(3)
+print(iphone)
+
 
 
 
@@ -121,10 +148,16 @@ class Ingredient:
     name: str
 
     def __init__(self, name: str):
-        self.name = name
+        self.__name = name
 
     def __str__(self):
         return self.name
+
+    def set_name(self, new_name: str) -> None:
+        self.__name = new_name
+
+    def get_name(self) -> str:
+        return self.__name
 
 
 class Potion:
@@ -137,26 +170,25 @@ class Potion:
 
 
     def __init__(self, name: str, ingredients: list[Ingredient], level_difficult: int, effect: str, is_readiness: bool):
-        self.name = name
-        self.ingredients = ingredients
-        self.level_difficult = level_difficult
-        self.effect = effect
-        self.is_readiness = is_readiness
+        self.__name = name
+        self.__ingredients = ingredients
+        self.__level_difficult = level_difficult
+        self.__effect = effect
+        self.__is_readiness = is_readiness
 
     def __str__(self):
-        return f"Name: {self.name} \ningredients: {self.get_ingredients()} \nlevel difficult: {self.level_difficult} \neffect: {self.effect} \nis readiness: {self.is_readiness}"
+        return f"Name: {self.__name} \ningredients: {self.get_ingredients()} \nlevel difficult: {self.__level_difficult} \neffect: {self.__effect} \nis readiness: {self.__is_readiness}"
 
     def add_ingredient(self, new_ingredient: Ingredient) -> None:
-        self.ingredients.append(new_ingredient)
+        self.__ingredients.append(new_ingredient)
 
     def delete_ingredient(self, delete_ingredient: Ingredient):
-        global delete_index
 
-        for i in range(len(self.ingredients)):
-            if self.ingredients[i] == delete_ingredient:
+        for i in range(len(self.__ingredients)):
+            if self.__ingredients[i] == delete_ingredient:
                 delete_index = i
 
-        self.ingredients.pop(delete_index)
+        self.__ingredients.pop(delete_index)
 
     def make_potion(self) -> str:
         return "Зелье приготовлено"
@@ -180,7 +212,7 @@ class Potion:
 
     def get_ingredients(self) -> list[str]:
 
-        return [ingredient.name for ingredient in self.ingredients]
+        return [ingredient.get_name() for ingredient in self.__ingredients]
 
     def get_level_difficult(self) -> int:
         return self.level_difficult
