@@ -3,11 +3,11 @@ from __future__ import annotations
 
 class Book:
 
-    tittle: str
-    author: str
-    year: int
-    id: int
-    genres: list[Genre]
+    __tittle: str
+    __author: str
+    __year: int
+    __id: int
+    __genres: list[Genre]
 
 
     def __init__(self, tittle: str, author: str, year: int, id: int, genres: list[Genre]):
@@ -78,25 +78,30 @@ class Book:
 
 class Genre:
 
-    def __init__(self):
-        pass
+    __name: str
+    __description: str
+
+    def __init__(self, name: str, description: str):
+        self.__name = name
+        self.__description = description
 
 
     def __str__(self):
-        pass
+        return (f"name: {self.__name}"
+                f"description: {self.__description}")
 
 
     def get_name(self) -> str:
-        pass
+        return self.__name
 
 
     def get_description(self) -> str:
-        pass
+        return self.__description
 
 
     def set_name(self, new_name: str) -> None:
-        pass
+        self.__name = new_name
 
 
     def set_description(self, new_description: str) -> None:
-        pass
+        self.__description = new_description
