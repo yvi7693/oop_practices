@@ -15,19 +15,22 @@ class Library:
 
 
     def __str__(self):
-        pass
+        return (f"name: {self.__name}"
+                f"address: {self.__address}"
+                f"books: {self.__books}"
+                f"employees: {self.__employees}")
 
 
     def get_name(self) -> str:
-        pass
+        return self.__name
 
 
     def get_books(self) -> list[Book]:
-        pass
+        return self.__books
 
 
     def get_employees(self) -> list[Employee]:
-        pass
+        return self.__employees
 
 
     def set_address(self, new_address: str) -> None:
