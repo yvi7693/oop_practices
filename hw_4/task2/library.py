@@ -1,4 +1,9 @@
 from __future__ import annotations
+
+from hw_4.task2.book import Book
+from hw_4.task2.employee import Employee
+
+
 class Library:
 
     __name: str
