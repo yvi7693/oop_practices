@@ -1,3 +1,5 @@
+from hw_4.task3.car import Car
+
 class Customer:
 
     __name: str
