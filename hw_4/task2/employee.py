@@ -37,15 +37,15 @@ class Employee:
         self.__position = new_position
 
 
-    def add_contact(self, contact: ContactInfo) -> None:
+    def add_contact(self, new_contact: ContactInfo) -> None:
         is_may = True
 
         for contact in self.__contacts:
-            if contact.type == contact.type:
+            if contact.type == new_contact.type:
                 is_may = False
 
         if is_may:
-            self.__contacts.append(contact)
+            self.__contacts.append(new_contact)
 
 
     def remove_contact(self, contact_delete: ContactInfo) -> None:
@@ -83,4 +83,4 @@ class ContactInfo:
     def get_value(self) -> str:
         return self.__value
 
-    type = property(get_type)
+    type = property(__get_type)
