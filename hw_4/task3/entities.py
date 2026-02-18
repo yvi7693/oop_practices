@@ -92,3 +92,7 @@ class Salesperson:
             sales.append(sale.get_brand())
 
         return sales
+
+
+    def build_experience(self, year: int) -> None:
+        self.__experience += year
