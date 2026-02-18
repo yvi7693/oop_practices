@@ -76,3 +76,19 @@ class Salesperson:
 
         if not delete_index is None:
             sales.pop(delete_index)
+
+    def get_name(self) -> str:
+        return self.__name
+
+
+    def get_experience(self) -> int:
+        return self.__experience
+
+
+    def get_sales(self) -> list[str]:
+        sales = []
+
+        for sale in self.__sales:
+            sales.append(sale.get_brand())
+
+        return sales

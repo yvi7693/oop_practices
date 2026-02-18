@@ -15,6 +15,12 @@ class Dealership:
         self.__customers = customers
 
 
+    def __str__(self):
+        return (f"available: {self.get_available()}\n"
+                f"salespersons: {self.get_salespersons()}\n"
+                f"customers: {self.get_customers()}")
+
+
     def shipment(self, car: Car) -> None:
         self.__available.append(car)
 
@@ -57,3 +63,30 @@ class Dealership:
 
         if not delete_index is None:
             salespersons.pop(delete_index)
+
+
+    def get_available(self) -> list[str]:
+        cars = []
+
+        for car in self.__available:
+            cars.append(car.get_brand())
+
+        return cars
+
+
+    def get_salespersons(self) -> list[str]:
+        salespersons = []
+
+        for salesperson in self.__salespersons:
+            salespersons.append(salesperson.get_name())
+
+        return salespersons
+
+
+    def get_customers(self) -> list[Customer]:
+        customers = []
+
+        for customer in self.__customers:
+            customers.append(customer.get_name())
+
+        return customers
