@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from hw_4.task2.book import Book
-from hw_4.task2.employee import Employee
+from hw_4.task2.model.book import Book
+from hw_4.task2.model.employee import Employee
 
 
 class Library:

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime
+
 
 class Book:
 
@@ -43,10 +45,19 @@ class Book:
 
 
     def get_genres(self) -> list[Genre]:
-        return self.__genres
+        record_genres = []
+
+        for genre in self.__genres:
+            record_genres.append(Genre.record(genre))
+
+        return record_genres
 
 
     def set_year(self, new_year: int) -> None:
+        if isinstance(new_year, int): raise TypeError()
+        if new_year < 0 or new_year > 2026: raise ValueError()
+        if new_year > datetime.now().year: raise ValueError()
+
         self.__year = new_year
 
 
@@ -105,3 +116,8 @@ class Genre:
 
     def set_description(self, new_description: str) -> None:
         self.__description = new_description
+
+
+    @staticmethod
+    def record(original: Genre) -> Genre:
+        return Genre(original.__name, original.__description)
