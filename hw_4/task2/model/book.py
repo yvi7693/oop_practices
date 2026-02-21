@@ -85,6 +85,10 @@ class Book:
             genres.pop(delete_index)
 
 
+    @staticmethod
+    def record(original: Book) -> Book:
+        return Book(original.__tittle, original.__author, original.__year, original.__id, original.__genres)
+
 
 
 class Genre:

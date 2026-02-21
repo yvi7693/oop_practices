@@ -30,7 +30,12 @@ class Employee:
 
 
     def get_contacts(self) -> list[ContactInfo]:
-        return self.__contacts
+        record_contacts = []
+
+        for contact in self.__contacts:
+            record_contacts.append(ContactInfo.record(contact))
+
+        return record_contacts
 
 
     def set_position(self, new_position: str) -> None:
@@ -60,6 +65,11 @@ class Employee:
             contacts.pop(delete_index)
 
 
+    @staticmethod
+    def record(original: Employee) -> Employee:
+        return Employee(original.__name, original.__position, original.__id, original.__contacts)
+
+
 
 class ContactInfo:
 
@@ -82,5 +92,10 @@ class ContactInfo:
 
     def get_value(self) -> str:
         return self.__value
+
+
+    @staticmethod
+    def record(original: ContactInfo) -> ContactInfo:
+        return ContactInfo(original.__type, original.__value)
 
     type = property(__get_type)

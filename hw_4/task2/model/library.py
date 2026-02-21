@@ -31,11 +31,21 @@ class Library:
 
 
     def get_books(self) -> list[Book]:
-        return self.__books
+        record_books = []
+
+        for book in self.__books:
+            record_books.append(Book.record(book))
+
+        return record_books
 
 
     def get_employees(self) -> list[Employee]:
-        return self.__employees
+        record_employees = []
+
+        for employee in self.__employees:
+            record_employees.append(Employee.record(employee))
+
+        return record_employees
 
 
     def set_address(self, new_address: str) -> None:
