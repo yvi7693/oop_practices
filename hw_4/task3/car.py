@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 class Car:
     __brand: str
@@ -30,8 +31,10 @@ class Car:
     def get_model(self) -> str:
         return self.__model
 
+
     def get_price(self) -> float:
         return self.__price
+
 
     def get_release_year(self) -> int:
         return self.__release_year
@@ -47,3 +50,8 @@ class Car:
 
     def set_status(self, new_status: str) -> None:
         self.__status = new_status
+
+
+    @staticmethod
+    def record(original: Car) -> Car:
+        return Car(original.__brand, original.__model, original.__price, original.__release_year, original.__status)

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from hw_4.task3.car import Car
 
 class Customer:
@@ -49,6 +50,11 @@ class Customer:
             orders.pop(delete_index)
 
 
+    @staticmethod
+    def record(original: Customer) -> Customer:
+        return Customer(original.__name, original.__phone, original.__email, original.__orders)
+
+
 
 class Salesperson:
 
@@ -96,3 +102,8 @@ class Salesperson:
 
     def build_experience(self, year: int) -> None:
         self.__experience += year
+
+
+    @staticmethod
+    def record(original: Salesperson) -> Salesperson:
+        return Salesperson(original.__name, original.__experience, original.__sales)

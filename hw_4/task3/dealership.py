@@ -25,7 +25,7 @@ class Dealership:
         self.__available.append(car)
 
 
-    def vend(self, car: Car):
+    def vend(self, car: Car) -> None:
         available = self.__available
         delete_index = None
 
@@ -65,28 +65,28 @@ class Dealership:
             salespersons.pop(delete_index)
 
 
-    def get_available(self) -> list[str]:
-        cars = []
+    def get_available(self) -> list[Car]:
+        record_cars = []
 
         for car in self.__available:
-            cars.append(car.get_brand())
+            record_cars.append(Car.record(car))
 
-        return cars
+        return record_cars
 
 
-    def get_salespersons(self) -> list[str]:
-        salespersons = []
+    def get_salespersons(self) -> list[Salesperson]:
+        record_salespersons = []
 
         for salesperson in self.__salespersons:
-            salespersons.append(salesperson.get_name())
+            record_salespersons.append(Salesperson.record(salesperson))
 
-        return salespersons
+        return record_salespersons
 
 
     def get_customers(self) -> list[Customer]:
-        customers = []
+        record_customers = []
 
         for customer in self.__customers:
-            customers.append(customer.get_name())
+            record_customers.append(Customer.record(customer))
 
-        return customers
+        return record_customers
