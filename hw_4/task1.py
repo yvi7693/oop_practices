@@ -22,27 +22,27 @@ class Student:
 
 
     def __eq__(self, other: Student):
-        return self.__average_score == other.average_score
+        return self.__average_score == other.__average_score
 
 
     def __ne__(self, other: Student):
-        return self.__average_score != other.average_score
+        return self.__average_score != other.__average_score
 
 
     def __lt__(self, other: Student):
-        return self.__average_score < other.average_score
+        return self.__average_score < other.__average_score
 
 
     def __gt__(self, other: Student):
-        return self.__average_score > other.average_score
+        return self.__average_score > other.__average_score
 
 
     def __le__(self, other: Student):
-        return self.__average_score <= other.average_score
+        return self.__average_score <= other.__average_score
 
 
     def __ge__(self, other: Student):
-        return self.__average_score >= other.average_score
+        return self.__average_score >= other.__average_score
 
 
     def get_first_name(self) -> str:
