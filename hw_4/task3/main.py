@@ -1,6 +1,6 @@
-from hw_4.task3.car import Car
-from hw_4.task3.dealership import Dealership
-from hw_4.task3.entities import Customer, Salesperson
+from hw_4.task3.model.car import Car
+from hw_4.task3.model.dealership import Dealership
+from hw_4.task3.model.entities import Customer, Salesperson
 
 bmw = Car("BMW", "M5", 10000, 2025, "в наличии")
 fresh = Dealership([bmw])

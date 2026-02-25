@@ -1,5 +1,5 @@
 from __future__ import annotations
-from hw_4.task3.car import Car
+from hw_4.task3.model.car import Car
 
 class Customer:
 

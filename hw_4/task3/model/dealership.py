@@ -1,5 +1,5 @@
-from hw_4.task3.car import Car
-from hw_4.task3.entities import Salesperson, Customer
+from hw_4.task3.model.car import Car
+from hw_4.task3.model.entities import Salesperson, Customer
 
 
 class Dealership:
