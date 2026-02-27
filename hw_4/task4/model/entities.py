@@ -10,6 +10,8 @@ class Spell:
     __mana: int
 
     def __init__(self, name: str, effect: str, mana: int):
+        if not isinstance(mana, int): raise TypeError()
+
         self.__name = name
         self.__effect = effect
         self.__mana = mana
@@ -42,7 +44,7 @@ class Spell:
         return self.__mana
 
     @staticmethod
-    def record(original: Spell) -> Spell:
+    def get_record(original: Spell) -> Spell:
         return Spell(original.__name, original.__effect, original.__mana)
 
     mana = property(__get_mana)
@@ -54,14 +56,18 @@ class HogwartsStudent:
     __house: str
     __mana: int
     __effect: str
-    __spells = list[Spell]
+    __spells: list[Spell]
+    __active_spell: Spell
 
-    def __init__(self, name: str, house: str, spells: list[Spell], effect = None):
+    def __init__(self, name: str, house: str, spells: list[Spell] = None, effect = None):
+        if not isinstance(spells, list): raise TypeError
+
         self.__name = name
         self.__house = house
         self.__mana = 100
-        self.__spells = spells
+        self.__spells = spells or []
         self.__effect = effect
+        self.__active_spell = None
 
     def __str__(self):
         return (f"name: {self.__name}"
@@ -86,7 +92,7 @@ class HogwartsStudent:
         record_spells = []
 
         for spell in self.__spells:
-            record_spells.append(Spell.record(spell))
+            record_spells.append(Spell.get_record(spell))
 
         return record_spells
 
@@ -104,16 +110,24 @@ class HogwartsStudent:
     def forget_spells(self) -> None:
         self.__spells = []
 
-    def try_cast_spell(self, target: HogwartsStudent) -> bool:
-        random_spell = random.randint(0, len(self.__spells) - 1)
-        spell = self.__spells[random_spell]
+    def cast_spell(self, target: HogwartsStudent) -> None:
+        self.__active_spell.cast(target, self)
+        self.__mana -= self.__active_spell.mana
+
+    def has_enough_mana(self) -> bool:
+        spell = self.choice_spell()
 
         if self.__mana < spell.mana: return False
 
-        spell.cast(target, self)
-        self.__mana -= spell.mana
-
+        self.__active_spell = spell
         return True
+
+    def choice_spell(self) -> Spell:
+        index_spell = random.randint(0, len(self.__spells) - 1)
+        spell = self.__spells[index_spell]
+
+        return spell
+
 
     mana = property(__get_mana)
 
@@ -123,9 +137,12 @@ class Hogwarts:
     __students: list[HogwartsStudent]
     __spells: list[Spell]
 
-    def __init__(self, students: list[HogwartsStudent], spells: list[Spell]):
-        self.__students = students
-        self.__spells = spells
+    def __init__(self, students: list[HogwartsStudent] = None, spells: list[Spell] = None):
+        if not isinstance(students, list): raise TypeError()
+        if not isinstance(spells, list): raise TypeError()
+
+        self.__students = students or []
+        self.__spells = spells or []
 
     def enroll_student(self, student: HogwartsStudent) -> None:
         self.__students.append(student)
@@ -133,18 +150,17 @@ class Hogwarts:
     def teach_spell(self, spell: Spell) -> None:
         self.__spells.append(spell)
 
-    def simulate_duel(self, attacker: HogwartsStudent, defender: HogwartsStudent) -> None:
-        while attacker.mana > 0 and defender.mana > 0:
-            if attacker.get_effect() != STUN or defender.get_effect() == SHIELD:
-                print("Пропуск хода")
-                attacker, defender = defender, attacker
-                continue
+    @staticmethod
+    def simulate_duel(attacker: HogwartsStudent, defender: HogwartsStudent) -> None:
 
-            if attacker.try_cast_spell(defender):
-                attacker, defender = defender, attacker
+        while attacker.has_enough_mana():
+            attacker.cast_spell(defender)
 
-            else:
-                print("Закончилась манна")
+        print("Закончилась мана")
+
+
+
+
 
 
 
