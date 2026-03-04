@@ -110,12 +110,19 @@ class HogwartsStudent:
     def forget_spells(self) -> None:
         self.__spells = []
 
-    def cast_spell(self, target: HogwartsStudent) -> None:
-        self.__active_spell.cast(target, self)
-        self.__mana -= self.__active_spell.mana
+    def try_cast_spell(self, target: HogwartsStudent) -> bool:
+        if len(self.__spells) != 0:
+            spell = self.choice_spell()
 
-    def has_enough_mana(self) -> bool:
-        spell = self.choice_spell()
+            if self.has_enough_mana(spell):
+                spell.cast(target, self)
+                self.__mana -= self.__active_spell.mana
+
+                return True
+
+        return False
+
+    def has_enough_mana(self, spell: Spell) -> bool:
 
         if self.__mana < spell.mana: return False
 
@@ -153,10 +160,10 @@ class Hogwarts:
     @staticmethod
     def simulate_duel(attacker: HogwartsStudent, defender: HogwartsStudent) -> None:
 
-        while attacker.has_enough_mana():
-            attacker.cast_spell(defender)
+        while attacker.try_cast_spell(defender):
+            attacker, defender = defender, attacker
 
-        print("Закончилась мана")
+        print("Дуэль завершен!")
 
 
 
