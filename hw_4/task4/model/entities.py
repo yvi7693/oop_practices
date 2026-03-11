@@ -143,7 +143,7 @@ class Hogwarts:
 
     __students: list[HogwartsStudent]
     __spells: list[Spell]
-    __referee: Referee
+    __Lockhart: Referee
 
     def __init__(self, students: list[HogwartsStudent] = None, spells: list[Spell] = None):
         if not isinstance(students, list): raise TypeError()
@@ -151,7 +151,7 @@ class Hogwarts:
 
         self.__students = students or []
         self.__spells = spells or []
-        self.__referee = Referee()
+        self.__lockhart = Referee()
 
     def enroll_student(self, student: HogwartsStudent) -> None:
         self.__students.append(student)
@@ -171,7 +171,7 @@ class Hogwarts:
 
     def simulate_duel(self) -> None:
         attacker, defender = self.choice_duelist()
-        self.__referee.arrange_duel(attacker, defender)
+        self.__lockhart.arrange_duel(attacker, defender)
 
 
 class Referee:
