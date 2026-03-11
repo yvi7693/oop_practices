@@ -10,7 +10,7 @@ harry = HogwartsStudent("Harry Potter", "Gryphendor", [expelliarmus, stupefy, av
 drako = HogwartsStudent("Drako Malfoy", "Slizering", [expelliarmus, stupefy, avada_kedavra, protego])
 
 hogwarts = Hogwarts([harry, drako], [expelliarmus, stupefy, avada_kedavra, protego])
-hogwarts.simulate_duel(harry, drako)
+hogwarts.simulate_duel()
 
 if harry.mana <= 0:
     print("Выиграл Драко")

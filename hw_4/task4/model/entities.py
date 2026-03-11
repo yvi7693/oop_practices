@@ -143,6 +143,7 @@ class Hogwarts:
 
     __students: list[HogwartsStudent]
     __spells: list[Spell]
+    __referee: Referee
 
     def __init__(self, students: list[HogwartsStudent] = None, spells: list[Spell] = None):
         if not isinstance(students, list): raise TypeError()
@@ -150,6 +151,7 @@ class Hogwarts:
 
         self.__students = students or []
         self.__spells = spells or []
+        self.__referee = Referee()
 
     def enroll_student(self, student: HogwartsStudent) -> None:
         self.__students.append(student)
@@ -157,12 +159,34 @@ class Hogwarts:
     def teach_spell(self, spell: Spell) -> None:
         self.__spells.append(spell)
 
-    @staticmethod
-    def simulate_duel(attacker: HogwartsStudent, defender: HogwartsStudent) -> None:
+    def choice_duelist(self) -> tuple[HogwartsStudent, HogwartsStudent]:
+        length = len(self.__students)
+        attacker_index, defender_index = random.sample(range(length), 2)
+
+        attacker = self.__students[attacker_index]
+        defender = self.__students[defender_index]
+
+        return attacker, defender
+
+
+    def simulate_duel(self) -> None:
+        attacker, defender = self.choice_duelist()
+        self.__referee.arrange_duel(attacker, defender)
+
+
+class Referee:
+
+    def __init__(self):
+        self.winner = None
+        self.loser = None
+
+    def arrange_duel(self, attacker: HogwartsStudent, defender: HogwartsStudent):
 
         while attacker.try_cast_spell(defender):
             attacker, defender = defender, attacker
 
+        self.loser = attacker
+        self.winner = defender
         print("Дуэль завершен!")
 
 
